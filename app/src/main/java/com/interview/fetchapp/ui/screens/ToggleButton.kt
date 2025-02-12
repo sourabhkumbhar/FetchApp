@@ -1,4 +1,4 @@
-package com.interview.fetchapp.screens
+package com.interview.fetchapp.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row

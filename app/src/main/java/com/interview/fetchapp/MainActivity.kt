@@ -32,9 +32,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.interview.fetchapp.screens.FetchListScreenCollapsable
-import com.interview.fetchapp.screens.FetchListScreenSticky
-import com.interview.fetchapp.screens.ToggleButton
+import com.interview.fetchapp.ui.screens.FetchListScreenCollapsable
+import com.interview.fetchapp.ui.screens.FetchListScreenSticky
+import com.interview.fetchapp.ui.screens.ToggleButton
 import com.interview.fetchapp.ui.theme.FetchAppTheme
 import com.interview.fetchapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
