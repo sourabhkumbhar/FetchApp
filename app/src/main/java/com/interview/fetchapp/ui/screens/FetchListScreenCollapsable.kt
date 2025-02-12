@@ -51,25 +51,23 @@ fun FetchListScreenCollapsable(viewModel: FetchViewModel = hiltViewModel()) {
         viewModel.fetchListItems()
     }
 
-    Scaffold(
-    ) { padding ->
-        Box(modifier = Modifier.padding(padding)) {
-            when (state) {
-                is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-                is Resource.Success -> {
-                    val groupedItems = remember((state as Resource.Success<List<ListItem>>).data) {
-                        (state as Resource.Success<List<ListItem>>).data!!
-                            .sortedWith(compareBy({ it.listId }, { it.name }))
-                            .groupBy { it.listId }  // Group by listId
-                    }
-
-                    CollapsibleLazyColumn(groupedItems)
+    Box {
+        when (state) {
+            is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            is Resource.Success -> {
+                val groupedItems = remember((state as Resource.Success<List<ListItem>>).data) {
+                    (state as Resource.Success<List<ListItem>>).data!!
+                        .sortedWith(compareBy({ it.listId }, { it.name }))
+                        .groupBy { it.listId }  // Group by listId
                 }
-                is Resource.Error -> Text(
-                    text = "Error: ${(state as Resource.Error).message}",
-                    color = MaterialTheme.colorScheme.error
-                )
+
+                CollapsibleLazyColumn(groupedItems)
             }
+
+            is Resource.Error -> Text(
+                text = "Error: ${(state as Resource.Error).message}",
+                color = MaterialTheme.colorScheme.error
+            )
         }
     }
 }
@@ -98,6 +96,7 @@ fun CollapsibleLazyColumn(groupedItems: Map<Int, List<ListItem>>) {
         }
     }
 }
+
 @Composable
 fun CollapsibleHeader(listId: Int, isExpanded: Boolean, onClick: () -> Unit) {
     Card(

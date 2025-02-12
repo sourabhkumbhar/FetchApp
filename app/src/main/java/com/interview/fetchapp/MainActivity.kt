@@ -63,11 +63,9 @@ fun MainScreen() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(48.dp))
 
         ToggleButton (isCollapsible) { isCollapsible = !isCollapsible }
-
-        Spacer(modifier = Modifier.height(8.dp))
 
         Box(
             modifier = Modifier

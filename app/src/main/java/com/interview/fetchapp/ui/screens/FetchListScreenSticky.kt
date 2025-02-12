@@ -39,48 +39,45 @@ fun FetchListScreenSticky(viewModel: FetchViewModel = hiltViewModel()) {
     LaunchedEffect(Unit) {
         viewModel.fetchListItems()
     }
+    Box() {
+        when (state) {
+            is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+            is Resource.Success -> {
+                val groupedItems = remember((state as Resource.Success<List<ListItem>>).data) {
+                    (state as Resource.Success<List<ListItem>>).data!!
+                        .sortedWith(compareBy({ it.listId }, { it.name }))
+                        .groupBy { it.listId }
+                }
 
-    Scaffold { padding ->
-        Box(modifier = Modifier.padding(padding)) {
-            when (state) {
-                is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-                is Resource.Success -> {
-                    val groupedItems = remember((state as Resource.Success<List<ListItem>>).data) {
-                        (state as Resource.Success<List<ListItem>>).data!!
-                            .sortedWith(compareBy({ it.listId }, { it.name }))
-                            .groupBy { it.listId }
-                    }
-
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        groupedItems.forEach { (listId, items) ->
-                            // Sticky Header
-                            stickyHeader {
-                                Text(
-                                    text = "List ID: $listId",
-                                    style = MaterialTheme.typography.titleMedium,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .background(MaterialTheme.colorScheme.primaryContainer)
-                                        .padding(16.dp),
-                                    color = MaterialTheme.colorScheme.onPrimaryContainer
-                                )
-                            }
-                            // List Items
-                            items(items, key = { it.id }) { item ->
-                                ListItemRow(item)
-                            }
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    groupedItems.forEach { (listId, items) ->
+                        // Sticky Header
+                        stickyHeader {
+                            Text(
+                                text = "List ID: $listId",
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(MaterialTheme.colorScheme.primaryContainer)
+                                    .padding(16.dp),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                        // List Items
+                        items(items, key = { it.id }) { item ->
+                            ListItemRow(item)
                         }
                     }
                 }
-
-                is Resource.Error -> Text(
-                    text = "Error: ${(state as Resource.Error).message}",
-                    color = MaterialTheme.colorScheme.error
-                )
             }
+
+            is Resource.Error -> Text(
+                text = "Error: ${(state as Resource.Error).message}",
+                color = MaterialTheme.colorScheme.error
+            )
         }
     }
 }
