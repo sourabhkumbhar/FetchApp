@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -28,13 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.interview.fetchapp.ListViewModel
+import com.interview.fetchapp.FetchViewModel
 import com.interview.fetchapp.data.ListItem
 import com.interview.fetchapp.util.Resource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun FetchListScreenSticky(viewModel: ListViewModel = hiltViewModel()) {
+fun FetchListScreenSticky(viewModel: FetchViewModel = hiltViewModel()) {
     val state by viewModel.items.collectAsState()
 
     LaunchedEffect(Unit) {

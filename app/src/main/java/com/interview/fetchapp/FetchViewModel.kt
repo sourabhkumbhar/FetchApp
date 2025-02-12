@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListViewModel @Inject constructor(
+class FetchViewModel @Inject constructor(
     private val repository: FetchRepository
 ) : ViewModel() {
 
